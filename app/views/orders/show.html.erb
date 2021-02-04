@@ -5,8 +5,6 @@
   </header>
   
   <div class="order-summary jumbotron">
-    <%= @order.inspect %>
-    <%= enhanced_cart %>
     <div class="panel panel-default items">
       <table class="table table-bordered">
         <thead>
@@ -34,7 +32,6 @@
         </tfoot>
       </table>
     </div>
-    Total: <%= humanized_money_with_symbol @order.total_cents / 100.0 %>
     Email: <%= @order.email %>
     <h4>Thank you for your order!</h4>
   </div>

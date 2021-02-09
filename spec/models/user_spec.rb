@@ -25,4 +25,30 @@ RSpec.describe User, type: :model do
       expect(@user.errors.messages[:password]).to eq ["is too short (minimum is 3 characters)"]
     end
   end
+  describe '.authenticate_with_credentials' do
+    # examples for this class method here
+    it 'should return the instance of the user if they exist' do
+      @user = User.new({name: 'John', email: 'John@gmail.com', password: '1234', password_confirmation: '1234'})
+      @user.save
+      valid = User.authenticate_with_credentials('John@gmail.com', '1234')
+      expect(valid).to_not be_nil
+    end
+    it 'should return nil if user does not exist' do
+      @user = User.new({name: 'John', email: 'John@gmail.com', password: '1234', password_confirmation: '1234'})
+      valid = User.authenticate_with_credentials('John@gmail.com', '1234')
+      expect(valid).to be_nil
+    end
+    it 'should return data if user inputs email with whitespace' do
+      @user = User.new({name: 'John', email: 'John@gmail.com', password: '1234', password_confirmation: '1234'})
+      @user.save
+      valid = User.authenticate_with_credentials('   John@gmail.com', '1234')
+      expect(valid).to_not be_nil
+    end
+    it 'should return data if user inputs email with different cases' do
+      @user = User.new({name: 'John', email: 'John@gmail.com', password: '1234', password_confirmation: '1234'})
+      @user.save
+      valid = User.authenticate_with_credentials('JOHN@gmail.com', '1234')
+      expect(valid).to_not be_nil
+    end
+  end
 end
